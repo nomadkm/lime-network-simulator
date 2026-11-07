@@ -1,0 +1,6 @@
+Lime Network Simulator - .exe oluşturma (Windows, Node.js 18+ gerekli)
+1) Bu klasörde terminal açın
+2) npm install
+3) npm run dist
+-> dist/ klasöründe "Lime Network Simulator.exe" (portable) oluşur.
+Denemek için: npm start

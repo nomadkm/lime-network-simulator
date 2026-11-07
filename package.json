@@ -1,0 +1,17 @@
+{
+  "name": "lime-network-simulator",
+  "version": "1.0.0",
+  "description": "Lime Network Simulator",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win portable"
+  },
+  "build": {
+    "appId": "com.lime.networksimulator",
+    "productName": "Lime Network Simulator",
+    "files": ["main.js", "index.html", "icon.ico"],
+    "win": { "target": "portable", "icon": "icon.ico" }
+  },
+  "devDependencies": { "electron": "^31.0.0", "electron-builder": "^24.13.3" }
+}
