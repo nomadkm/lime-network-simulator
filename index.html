@@ -11,7 +11,7 @@ button:hover{border-color:var(--l)}button.on{background:var(--l);color:#111;bord
 #app{display:grid;grid-template-columns:150px 1fr 290px;grid-template-rows:46px 1fr 130px;height:100%}
 #top{grid-column:1/4;background:var(--p);border-bottom:1px solid var(--b);display:flex;gap:6px;align-items:center;padding:0 10px}
 #top b{color:var(--l);margin-right:10px}#pal{background:var(--p);border-right:1px solid var(--b);padding:8px;overflow:auto;display:flex;flex-direction:column;gap:5px}
-#pal small{color:var(--m);margin-top:6px}#pal button{text-align:left}
+#pal small{color:var(--m);margin-top:6px;text-transform:uppercase}#pal button{text-align:left}
 #cv{width:100%;height:100%;display:block}#cw{position:relative;overflow:hidden}
 #side{background:var(--p);border-left:1px solid var(--b);padding:12px;overflow:auto;line-height:1.5}
 #side h3{margin:0 0 6px;color:var(--l)}#side .r{margin:6px 0;color:var(--m)}#side .bx{background:#10151b;border:1px solid var(--b);border-radius:6px;padding:8px;margin:8px 0}
@@ -29,9 +29,9 @@ button:hover{border-color:var(--l)}button.on{background:var(--l);color:#111;bord
 <div id="top"><b>🍋 Lime</b>
 <button id="run" class="on">⏸ Duraklat</button><button id="ping">📨 Paket Gönder</button>
 <select id="proto" style="background:#232c38;color:#fff;border:1px solid #2a3340;border-radius:6px;padding:6px"><option>ICMP</option><option>ARP</option><option>TCP</option><option>UDP</option><option>HTTP</option><option>DNS</option><option>DHCP</option></select>
-<button id="guide">📚 Rehber / Eğitim</button><button id="clr">🧹 Logu Temizle</button><button id="clrall">🗑 Tümünü Sil</button></div>
+<button id="guide">📚 Rehber / Eğitim</button><button id="clr">🧹 Logu Temizle</button><button id="clrall">🗑 Tümünü Sil</button><button id="undo">↶ Geri Al</button><button id="redo">↷ Yinele</button><button id="save">💾 Kaydet</button><button id="open">📂 Aç</button><select id="lng" style="margin-left:auto;background:#232c38;color:#fff;border:1px solid #2a3340;border-radius:6px;padding:6px"><option value="tr">Türkçe</option><option value="en">English</option></select><input type="file" id="fi" accept=".json" hidden></div>
 <div id="pal"></div>
-<div id="cw"><canvas id="cv"></canvas><div class="hint">Sol tık sürükle: gez · Tekerlek: yakınlaştır</div></div>
+<div id="cw"><canvas id="cv"></canvas><div class="hint">Sol/sağ tık sürükle: gez · Tekerlek: yakınlaştır</div></div>
 <div id="side"></div>
 <div id="log"></div></div>
 <div id="md"><div><div id="mh"></div><div id="mb"></div></div></div>
@@ -50,6 +50,8 @@ modem:{n:'Modem',e:'📶',mx:100,wf:1,dte:0,f:1,d:'Servis sağlayıcı hattını
 phone:{n:'Akıllı Telefon',e:'📱',dte:1,f:0,w:1,nw:1,ip:1,d:'Wi-Fi ile bağlanan mobil cihaz. Kablo portu yoktur.',c:'Yalnızca Wi-Fi: Wi-Fi aracını seçip telefonu Wi-Fi vericisine (AP, Router, Modem) sürükleyin; AP menzilinde olmalı.'},
 iot:{n:'IoT Cihazı',e:'🌡️',dte:1,f:0,w:1,nw:1,ip:1,d:'Sensör, akıllı priz, kamera gibi düşük güçlü kablosuz cihazlar.',c:'Yalnızca Wi-Fi: AP menzilinde olmalı. Mesafe arttıkça sinyal ve hız düşer.'},
 ddos:{n:'DDoS Temizleme',e:'🛡️',dte:1,f:1,mx:10000,ip:1,d:'Trafiği analiz eder; botnet kaynaklı DDoS paketlerini çöpe atar. Saldırı yapan IP’yi bir süre sonra bloklar.',c:'Firewall/router ile ve saldırıdan korunacak sunucunun önüne, trafiğin geçtiği yola yerleştirin. Switch ile DÜZ, router ile ÇAPRAZ kablo.'},
+mesh:{n:'Mesh Wi-Fi',e:'🕸️',dte:0,f:0,mx:1000,wf:1,ip:1,d:'Birden fazla düğümle evin her yerine tek ağ gibi Wi-Fi yayar. Düğümler birbirine kablosuz (backhaul) veya kablolu bağlanır ve kendi aralarında kanal çakışması yapmaz.',c:'Router/modeme DÜZ kablo veya Wi-Fi ile bağlanır; diğer mesh düğümleriyle Wi-Fi aracıyla bağlanır. İstemciler menzildeki düğüme Wi-Fi ile bağlanır.'},
+dns:{n:'DNS Sunucusu',e:'📖',dte:1,f:1,mx:10000,ip:1,d:'Alan adlarını IP adreslerine çevirir. Doğrudan bağlı olduğu sunucuya dünyada popüler bir sitenin adını (google.com, youtube.com…) verir.',c:'Alan adı vermek istediğiniz sunucuya doğrudan ÇAPRAZ kabloyla (aynı grup) veya FİBER ile bağlayın.'},
 olt:{n:'OLT',e:'🏢',mx:10000,fo:1,dte:1,f:1,ip:1,d:'FTTx (GPON/EPON) altyapısında servis sağlayıcı tarafındaki optik hat terminali. ONT’leri besler.',c:'Tüm portları yalnızca FİBER’dir; bakır kablo kabul etmez.'},
 ont:{n:'ONT',e:'📦',mx:2500,dte:0,f:1,d:'Abone tarafındaki optik ağ sonlandırıcı; fiber hattı Ethernet’e çevirir.',c:'OLT ile FİBER; router ile DÜZ kablo.'}};
 const CAB={straight:{n:'Düz (bakır)',c:'#8bc34a',s:.2},cross:{n:'Çapraz (bakır)',c:'#ffb74d',s:.2},fiber:{n:'Fiber optik',c:'#4dd0e1',s:.65},wifi:{n:'Wi-Fi (kablosuz)',c:'#c792ea',s:.2}};
@@ -59,23 +61,39 @@ function sig(l){const a=dv(l.a),b=dv(l.b);return 1-Math.hypot(a.x-b.x,a.y-b.y)/S
 const CAT={'5':{n:'Cat5',v:100,m:100},'5e':{n:'Cat5e',v:1000,m:100},'6':{n:'Cat6',v:1000,m:100},'6a':{n:'Cat6a',v:10000,m:100},mm:{n:'Fiber çok modlu',v:10000,m:300},sm:{n:'Fiber tek modlu',v:100000,m:20000}};
 const hasWf=d=>DEV[d.type].wf&&(d.type!='router'||d.wifi);
 const band=d=>d.std=='ac'?5:2.4;
-function conf(d){return devs.some(o=>o!=d&&hasWf(o)&&band(o)==band(d)&&Math.abs(o.ch-d.ch)<5&&Math.hypot(o.x-d.x,o.y-d.y)<STD[o.std||'n'].r+STD[d.std||'n'].r)}
-function intf(l){const ap=apOf(l),a=dv(l.a),b=dv(l.b),c=ap==a?b:a;let I=0;for(const o of devs){if(o==ap||!hasWf(o)||band(o)!=band(ap))continue;const df=Math.abs(o.ch-ap.ch);if(df>=5)continue;I+=(1-df/5)*Math.max(0,1-Math.hypot(o.x-c.x,o.y-c.y)/STD[o.std||'n'].r)}return I}
+function conf(d){return devs.some(o=>o!=d&&hasWf(o)&&band(o)==band(d)&&!(o.type=='mesh'&&d.type=='mesh')&&Math.abs(o.ch-d.ch)<5&&Math.hypot(o.x-d.x,o.y-d.y)<STD[o.std||'n'].r+STD[d.std||'n'].r)}
+function intf(l){const ap=apOf(l),a=dv(l.a),b=dv(l.b),c=ap==a?b:a;let I=0;for(const o of devs){if(o==ap||(o.type=='mesh'&&ap.type=='mesh')||!hasWf(o)||band(o)!=band(ap))continue;const df=Math.abs(o.ch-ap.ch);if(df>=5)continue;I+=(1-df/5)*Math.max(0,1-Math.hypot(o.x-c.x,o.y-c.y)/STD[o.std||'n'].r)}return I}
+const port=d=>d.eth||DEV[d.type].mx;
+function HW(d){const I=DEV[d.type],st='style="background:#232c38;color:#fff;border:1px solid #2a3340;border-radius:6px;padding:4px"';let h='';
+if(d.type=='pc'||d.type=='laptop')h+=`Ethernet hızı: <select ${st} onchange="setEth(this.value)">${[100,1000,2500,10000].map(v=>`<option value="${v}" ${(d.eth||1000)==v?'selected':''}>${fmt(v)}</option>`).join('')}</select><br>`;
+if(I.w)h+=`Wi-Fi sürümü: <select ${st} onchange="setWs(this.value)">${Object.keys(STD).map(k=>`<option value="${k}" ${(d.wstd||'n')==k?'selected':''}>${STD[k].n}</option>`).join('')}</select><br>`;
+if(d.type=='switch')h+=`<label><input type="checkbox" ${d.stp!==0?'checked':''} onchange="setStp(this.checked)"> STP (Spanning Tree) açık</label><br>`;
+if(d.site)h+=`🌐 Alan adı: <b>${d.site}</b>`;
+if(d.type=='dns'){const r=devs.filter(x=>x.site&&links.some(l=>l.plugged&&((l.a==x.id&&l.b==d.id)||(l.b==x.id&&l.a==d.id))));h+='<b>Kayıtlar</b><br>'+(r.length?r.map(x=>x.site+' → '+x.ip).join('<br>'):'<small>Henüz kayıt yok. Bir sunucuya doğrudan kablo bağlayın.</small>')}
+return h?`<div class="bx">${h}</div>`:''}
+function setEth(v){snap();const d=dv(sel.id);d.eth=+v;log(`${d.name}: Ethernet ${fmt(+v)} yapıldı.`,'wr');panel()}
+function setWs(v){snap();const d=dv(sel.id);d.wstd=v;log(`${d.name}: Wi-Fi sürümü ${STD[v].n} yapıldı.`,'wr');panel()}
+function dnsSync(){for(const s of devs){if(s.type!='server')continue;const c=links.some(l=>{if(!l.plugged||(l.a!=s.id&&l.b!=s.id))return 0;const o=dv(l.a==s.id?l.b:l.a);return o.type=='dns'&&chk(l)[0]});
+if(c&&!s.site){const fr=SITES.filter(x=>!devs.some(d=>d.site==x));s.site=fr.length?fr[Math.floor(Math.random()*fr.length)]:'site'+s.id+'.com';log(`🌐 DNS: ${s.name} (${s.ip}) için ${s.site} kaydı oluşturuldu.`,'ok');if(sel)panel()}
+else if(!c&&s.site){log(`🌐 DNS bağlantısı koptu: ${s.site} artık çözümlenmiyor.`,'wr');s.site=null;if(sel)panel()}}}
 const dm=l=>{const a=dv(l.a),b=dv(l.b);return Math.round(Math.hypot(a.x-b.x,a.y-b.y)*.25)};
 const catOf=l=>l.cat||(l.cable=='fiber'?'sm':'5e');
 const fmt=v=>v>=1000?+(v/1000).toFixed(1)+' Gbps':v+' Mbps';
-function mbps(l){if(l.cable=='wifi')return Math.round(STD[apOf(l).std||'n'].v*(.3+.7*Math.max(0,sig(l)))/(1+1.5*intf(l)));const a=dv(l.a),b=dv(l.b),d=dm(l),c=CAT[catOf(l)];let v=c.v;if(catOf(l)=='6')v=d<=55?10000:1000;v*=1-.5*Math.max(0,(d-c.m/2)/(c.m/2));return Math.round(Math.min(v,DEV[a.type].mx,DEV[b.type].mx))}
+function mbps(l){if(l.cable=='wifi'){const a=dv(l.a),b=dv(l.b),ap=apOf(l),cl=ap==a?b:a,sa=STD[ap.std||'n'].v,sc=hasWf(cl)?STD[cl.std||'n'].v:STD[cl.wstd||'n'].v;return Math.round(Math.min(sa,sc)*(.3+.7*Math.max(0,sig(l)))/(1+1.5*intf(l)))};const a=dv(l.a),b=dv(l.b),d=dm(l),c=CAT[catOf(l)];let v=c.v;if(catOf(l)=='6')v=d<=55?10000:1000;v*=1-.5*Math.max(0,(d-c.m/2)/(c.m/2));return Math.round(Math.min(v,port(a),port(b)))}
 const spd=l=>Math.min(1,Math.max(.03,.012*Math.sqrt(mbps(l))));
 function newIP(){let ip;do ip=`192.168.${Math.floor(Math.random()*10)}.${2+Math.floor(Math.random()*253)}`;while(devs.some(d=>d.ip==ip));return ip}
 const PROTO={ARP:'IP→MAC çözümler.',ICMP:'Ping; erişilebilirlik testi.',IP:'Adresleme ve yönlendirme.',TCP:'Güvenilir, bağlantı yönelimli taşıma.',UDP:'Hızlı, bağlantısız taşıma.',DHCP:'Otomatik IP dağıtımı.',DNS:'İsim→IP çözümleme.',HTTP:'Web (HTTPS şifreli).',FTP:'Dosya aktarımı.',SSH:'Güvenli uzak yönetim.',Telnet:'Şifresiz uzak yönetim.',SMTP:'E-posta gönderimi.',STP:'Switch döngü engelleme.',VLAN:'Mantıksal ağ ayrımı (802.1Q).',NAT:'Özel→genel IP çevirisi.',OSPF:'Link-state iç yönlendirme.',RIP:'Mesafe-vektör yönlendirme.',BGP:'İnternet ölçeğinde yönlendirme.'};
+const GRP={'Uç Cihazlar':['pc','laptop','phone','iot'],'Ağ Cihazları':['switch','hub','router','modem'],'Kablosuz':['ap','mesh'],'Sunucular':['server','dns'],'Güvenlik':['firewall','ddos'],'Servis Sağlayıcı (FTTx)':['olt','ont']};
+const SITES=['google.com','youtube.com','facebook.com','wikipedia.org','amazon.com','instagram.com','x.com','netflix.com','whatsapp.com','tiktok.com','linkedin.com','reddit.com','yahoo.com','microsoft.com','apple.com','github.com','twitch.tv','spotify.com','zoom.us','openai.com'];
 let devs=[],links=[],pk=[],glow={},nid=1,view={x:0,y:0,z:1},tool='sel',sel=null,running=true,pingSrc=null,bad={},drag=null,cur={x:0,y:0};
 const cv=$('cv'),cx=cv.getContext('2d');
-function log(m,c='in'){const d=document.createElement('div');d.className=c;d.textContent=new Date().toLocaleTimeString()+'  '+m;$('log').append(d);$('log').scrollTop=1e9}
-function pal(){let h='<small>CİHAZLAR</small>';for(const k in DEV)h+=`<button data-t="${k}" class="${tool=='add:'+k?'on':''}">${DEV[k].e} ${DEV[k].n}</button>`;
-h+='<small>KABLOLAR</small>';for(const k in CAB)h+=`<button data-t="${k}" class="${tool==k?'on':''}">${k=='fiber'?'💡':k=='wifi'?'📶':'🔗'} ${CAB[k].n}</button>`;
-h+=`<small>ARAÇ</small><button data-t="sel" class="${tool=='sel'?'on':''}">🖱️ Seç / Taşı</button>`;$('pal').innerHTML=h;
+function log(m,c='in'){const d=document.createElement('div');d.className=c;d.textContent=new Date().toLocaleTimeString()+'  '+tr(m);$('log').append(d);$('log').scrollTop=1e9}
+function pal0(){let h='';for(const g in GRP){h+=`<small>${g}</small>`;for(const k of GRP[g])h+=`<button data-t="${k}" class="${tool=='add:'+k?'on':''}">${DEV[k].e} <span>${DEV[k].n}</span></button>`}
+h+='<small>KABLOLAR</small>';for(const k in CAB)h+=`<button data-t="${k}" class="${tool==k?'on':''}">${k=='fiber'?'💡':k=='wifi'?'📶':'🔗'} <span>${CAB[k].n}</span></button>`;
+h+=`<small>ARAÇ</small><button data-t="sel" class="${tool=='sel'?'on':''}">🖱️ <span>Seç / Taşı</span></button>`;$('pal').innerHTML=h;
 $('pal').querySelectorAll('button').forEach(b=>b.onclick=()=>{const t=b.dataset.t;tool=DEV[t]?'add:'+t:t;pingSrc=null;$('ping').classList.remove('on');pal()})}
 function chk(l){const a=dv(l.a),b=dv(l.b),A=DEV[a.type],B=DEV[b.type];
+if(l.cable=='wifi'&&hasWf(a)&&hasWf(b)){if(a.type!='mesh'&&b.type!='mesh')return[0,'İki Wi-Fi vericisi yalnızca mesh düğümü aracılığıyla kablosuz bağlanabilir.'];if(sig(l)<=0)return[0,'Mesh düğümleri birbirinin menzili dışında; yaklaştırın.'];return[1,'']}
 if(l.cable=='wifi'){const ap=hasWf(a)?a:b,cl=ap==a?b:a;if(!hasWf(ap)||!DEV[cl.type].w)return[0,'Wi-Fi yalnızca Wi-Fi vericisi (Access Point, Router, Modem) ile kablosuz destekli cihaz (dizüstü, telefon, IoT) arasında kurulur.'];if(sig(l)<=0)return[0,`${cl.name}, ${ap.name} (${STD[ap.std||'n'].n}) menzili dışında; cihazı yaklaştırın veya daha uzun menzilli standart seçin.`];return[1,'']}
 if(A.fo||B.fo)if(l.cable!='fiber')return[0,`${A.fo?a.name:b.name} yalnızca FİBER ile çalışır; bakır kablo takılamaz.`];
 if(l.cable!='wifi'){const c=CAT[catOf(l)],d=dm(l);if(d>c.m)return[0,`Kablo mesafesi ${d} m; ${c.n} en fazla ${c.m} m destekler.`]}
@@ -85,60 +103,95 @@ if(l.cable=='fiber'){if(!A.f||!B.f)return[0,`Fiber: ${!A.f?a.name:b.name} fiber 
 if(l.cable=='straight'&&A.dte==B.dte)return[0,`Aynı tür cihazlar (${a.name}–${b.name}) arasında DÜZ kablo çalışmaz; ÇAPRAZ gerekir.`];
 if(l.cable=='cross'&&A.dte!=B.dte)return[0,`Farklı tür cihazlar (${a.name}–${b.name}) arasında ÇAPRAZ kablo çalışmaz; DÜZ gerekir.`];return[1,'']}
 const dv=id=>devs.find(d=>d.id==id),lk=id=>links.find(l=>l.id==id);
-function name(t){return DEV[t].n+(devs.filter(d=>d.type==t).length+1)}
+function name(t){return tr(DEV[t].n)+(devs.filter(d=>d.type==t).length+1)}
 function W(e){const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left-view.x)/view.z,y:(e.clientY-r.top-view.y)/view.z}}
 const hitD=p=>[...devs].reverse().find(d=>Math.abs(p.x-d.x)<36&&Math.abs(p.y-d.y)<30);
 function hitL(p){return links.find(l=>{const a=dv(l.a),b=dv(l.b),dx=b.x-a.x,dy=b.y-a.y,t=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/(dx*dx+dy*dy||1)));return Math.hypot(p.x-a.x-t*dx,p.y-a.y-t*dy)<8/view.z})}
+function place(p){snap();const t=tool.slice(4);devs.push({id:nid++,type:t,x:p.x,y:p.y,name:name(t),ip:DEV[t].ip?newIP():null,std:DEV[t].wf?(t=='mesh'?'ax':'n'):null,ch:DEV[t].wf?[1,6,11][Math.floor(Math.random()*3)]:null});log(DEV[t].n+' eklendi.');tool='sel';pal();sel={k:'d',id:devs.at(-1).id};panel();}
 cv.onmousedown=e=>{const p=W(e),d=hitD(p);cur=p;
-if(e.button==1){drag={k:'pan',sx:e.clientX,sy:e.clientY,vx:view.x,vy:view.y};e.preventDefault();return}
+if(e.button==1||e.button==2){drag={k:'pan',sx:e.clientX,sy:e.clientY,vx:view.x,vy:view.y};e.preventDefault();return}
 if(e.button)return;
-if(tool.startsWith('add:')){const t=tool.slice(4);devs.push({id:nid++,type:t,x:p.x,y:p.y,name:name(t),ip:DEV[t].ip?newIP():null,std:DEV[t].wf?'n':null,ch:DEV[t].wf?[1,6,11][Math.floor(Math.random()*3)]:null});log(DEV[t].n+' eklendi.');tool='sel';pal();sel={k:'d',id:devs.at(-1).id};panel();return}
+if(tool.startsWith('add:')){drag={k:'pan',sx:e.clientX,sy:e.clientY,vx:view.x,vy:view.y,add:p};return}
 if(pingSrc!==null||$('ping').classList.contains('on')){if(!d)return;if(pingSrc===null){pingSrc=d.id;log('Kaynak: '+d.name+' — şimdi hedef cihaza tıklayın.','wr')}else{send(pingSrc,d.id);pingSrc=null;$('ping').classList.remove('on')}return}
-if(CAB[tool]){if(!d)return;if(pingSrc===null&&!drag){drag={k:'cab',from:d.id}}return}
+if(CAB[tool]){if(!d){drag={k:'pan',sx:e.clientX,sy:e.clientY,vx:view.x,vy:view.y};return}if(pingSrc===null&&!drag){drag={k:'cab',from:d.id}}return}
 if(d){sel={k:'d',id:d.id};drag={k:'dev',id:d.id,ox:p.x-d.x,oy:p.y-d.y}}else{const l=hitL(p);sel=l?{k:'l',id:l.id}:null;if(!l)drag={k:'pan',sx:e.clientX,sy:e.clientY,vx:view.x,vy:view.y}}panel()};
-cv.onmousemove=e=>{cur=W(e);if(!drag)return;if(drag.k=='pan'){view.x=drag.vx+e.clientX-drag.sx;view.y=drag.vy+e.clientY-drag.sy}else if(drag.k=='dev'){const d=dv(drag.id);d.x=cur.x-drag.ox;d.y=cur.y-drag.oy}};
-addEventListener('mouseup',e=>{if(drag&&drag.k=='cab'){const d=hitD(W(e));if(d&&d.id!=drag.from){const l={id:nid++,a:drag.from,b:d.id,cable:tool,cat:tool=='fiber'?'sm':'5e',plugged:true};links.push(l);const[ok,r]=chk(l);log(`${dv(l.a).name} ⇄ ${d.name} (${CAB[tool].n}) bağlandı.`+(ok?' ✔ Doğru bağlantı.':' ✘ YANLIŞ: '+r),ok?'ok':'er');sel={k:'l',id:l.id};panel()}}drag=null});
+cv.onmousemove=e=>{cur=W(e);if(!drag)return;if(drag.k=='pan'){if(Math.hypot(e.clientX-drag.sx,e.clientY-drag.sy)>4)drag.mv=1;view.x=drag.vx+e.clientX-drag.sx;view.y=drag.vy+e.clientY-drag.sy}else if(drag.k=='dev'){if(!drag.sd){drag.sd=1;snap()}const d=dv(drag.id);d.x=cur.x-drag.ox;d.y=cur.y-drag.oy}};
+addEventListener('mouseup',e=>{if(drag&&drag.add&&!drag.mv&&tool.startsWith('add:'))place(drag.add);if(drag&&drag.k=='cab'){const d=hitD(W(e));if(d&&d.id!=drag.from){if(links.some(x=>(x.a==drag.from&&x.b==d.id)||(x.b==drag.from&&x.a==d.id))){log(`✘ ${dv(drag.from).name} ve ${d.name} zaten bir kabloyla bağlı. Önce mevcut kabloyu silin veya türünü değiştirin.`,'er');drag=null;return}snap();const l={id:nid++,a:drag.from,b:d.id,cable:tool,cat:tool=='fiber'?'sm':'5e',plugged:true};links.push(l);const[ok,r]=chk(l);log(`${dv(l.a).name} ⇄ ${d.name} (${CAB[tool].n}) bağlandı.`+(ok?' ✔ Doğru bağlantı.':' ✘ YANLIŞ: '+r),ok?'ok':'er');sel={k:'l',id:l.id};panel()}}drag=null});
 cv.onwheel=e=>{e.preventDefault();const r=cv.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top,z=Math.max(.25,Math.min(3,view.z*(e.deltaY<0?1.1:.9)));view.x=mx-(mx-view.x)*z/view.z;view.y=my-(my-view.y)*z/view.z;view.z=z};
-cv.onauxclick=e=>e.preventDefault();
-addEventListener('keydown',e=>{if(e.key=='Escape'){tool='sel';pingSrc=null;pal()}if(e.key=='Delete')del()});
-function del(){if(!sel)return;if(sel.k=='d'){const d=dv(sel.id);links=links.filter(l=>l.a!=d.id&&l.b!=d.id);devs=devs.filter(x=>x!=d);log(d.name+' silindi.','wr')}else{links=links.filter(l=>l.id!=sel.id);log('Kablo silindi.','wr')}sel=null;panel()}
-function panel(){const s=$('side');if(!sel){s.innerHTML='<h3>Topoloji boş</h3><div class="r">Soldan bir cihaz seçip tuvale tıklayarak ekleyin. Kablo seçip bir cihazdan diğerine sürükleyin.</div>';return}
+cv.onauxclick=e=>e.preventDefault();cv.oncontextmenu=e=>e.preventDefault();
+addEventListener('keydown',e=>{if(e.key=='Escape'){tool='sel';pingSrc=null;pal()}if(e.key=='Delete')del();if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()=='z'){e.preventDefault();e.shiftKey?doRedo():doUndo()}if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()=='y'){e.preventDefault();doRedo()}});
+function del(){if(!sel)return;snap();if(sel.k=='d'){const d=dv(sel.id);links=links.filter(l=>l.a!=d.id&&l.b!=d.id);devs=devs.filter(x=>x!=d);log(d.name+' silindi.','wr')}else{links=links.filter(l=>l.id!=sel.id);log('Kablo silindi.','wr')}sel=null;panel()}
+function panel0(){const s=$('side');if(!sel){s.innerHTML='<h3>Topoloji boş</h3><div class="r">Soldan bir cihaz seçip tuvale tıklayarak ekleyin. Kablo seçip bir cihazdan diğerine sürükleyin.</div>';return}
 if(sel.k=='d'){const d=dv(sel.id),I=DEV[d.type],ls=links.filter(l=>l.a==d.id||l.b==d.id);
-s.innerHTML=`<h3>${I.e} ${d.name}</h3><div class="r">${I.n}${d.ip?' · <b style="color:#fff">'+d.ip+'</b>':''}</div>${hasWf(d)?`<div class="bx">📶 Wi-Fi standardı<br><select onchange="setStd(this.value)" style="background:#232c38;color:#fff;border:1px solid #2a3340;border-radius:6px;padding:5px;width:100%">${Object.keys(STD).map(k=>`<option value="${k}" ${d.std==k?'selected':''}>${STD[k].n} · ${STD[k].m}</option>`).join('')}</select><br>Kanal: <select onchange="setCh(this.value)" style="background:#232c38;color:#fff;border:1px solid #2a3340;border-radius:6px;padding:5px">${[1,2,3,4,5,6,7,8,9,10,11].map(k=>`<option ${d.ch==k?'selected':''}>${k}</option>`).join('')}</select>${conf(d)?'<div class="er">⚠ Kanal çakışması var (kırmızı çember)</div>':''}<small>Yakın kanaldaki vericiler birbirine parazit yapar; 1-6-11 idealdir. 802.11ac 5 GHz’dir.</small></div>`:''}${d.type=='router'?`<div class="bx"><label><input type="checkbox" ${d.wifi?'checked':''} onchange="wfx(this.checked)"> Bu router’da Wi-Fi var</label></div>`:''}${false?``:''}<div>${I.d}</div>${['pc','laptop','phone','iot'].includes(d.type)?`<div class="bx">🦠 <label><input type="checkbox" ${d.bot?'checked':''} onchange="bot(this.checked)"> Botnet virüslü</label>${d.blk?'<div class="er">⛔ IP bloklandı (DDoS)</div>':''}<br><button onclick="rip()">🔄 IP Sıfırla</button></div>`:''}<div class="bx"><b>🔧 Kablolama</b><br>${I.c}<br><small>Fiber: ${I.f?'destekler ✔':'desteklemez ✘'}${I.mx?' · Maks. port: '+fmt(I.mx):''}</small></div><div class="r">Bağlantılar: ${ls.length}</div><button onclick="del()">🗑 Cihazı Sil</button>`}
+s.innerHTML=`<h3>${I.e} ${d.name}</h3><div class="r">${I.n}${d.ip?' · <b style="color:#fff">'+d.ip+'</b>':''}</div>${hasWf(d)?`<div class="bx">📶 Wi-Fi standardı<br><select onchange="setStd(this.value)" style="background:#232c38;color:#fff;border:1px solid #2a3340;border-radius:6px;padding:5px;width:100%">${Object.keys(STD).map(k=>`<option value="${k}" ${d.std==k?'selected':''}>${STD[k].n} · ${STD[k].m}</option>`).join('')}</select><br>Kanal: <select onchange="setCh(this.value)" style="background:#232c38;color:#fff;border:1px solid #2a3340;border-radius:6px;padding:5px">${[1,2,3,4,5,6,7,8,9,10,11].map(k=>`<option ${d.ch==k?'selected':''}>${k}</option>`).join('')}</select>${conf(d)?'<div class="er">⚠ Kanal çakışması var (kırmızı çember)</div>':''}<small>Yakın kanaldaki vericiler birbirine parazit yapar; 1-6-11 idealdir. 802.11ac 5 GHz’dir.</small></div>`:''}${d.type=='router'?`<div class="bx"><label><input type="checkbox" ${d.wifi?'checked':''} onchange="wfx(this.checked)"> Bu router’da Wi-Fi var</label></div>`:''}${false?``:''}<div>${I.d}</div>${HW(d)}${['pc','laptop','phone','iot'].includes(d.type)?`<div class="bx">🦠 <label><input type="checkbox" ${d.bot?'checked':''} onchange="bot(this.checked)"> Botnet virüslü</label>${d.blk?'<div class="er">⛔ IP bloklandı (DDoS)</div>':''}<br><button onclick="rip()">🔄 IP Sıfırla</button></div>`:''}<div class="bx"><b>🔧 Kablolama</b><br>${I.c}<br><small>Fiber: ${I.f?'destekler ✔':'desteklemez ✘'}${I.mx?' · Maks. port: '+fmt(I.mx):''}</small></div><div class="r">Bağlantılar: ${ls.length}</div><button onclick="del()">🗑 Cihazı Sil</button>`}
 else{const l=lk(sel.id);if(!l){sel=null;return panel()}const[ok,r]=chk(l);
-s.innerHTML=`<h3>${l.cable=='fiber'?'💡':'🔗'} Kablo</h3><div class="r">${dv(l.a).name} ⇄ ${dv(l.b).name}</div><div>Tür: <b>${CAB[l.cable].n}</b></div>${l.cable!='wifi'?'<div>Kategori: <select onchange="setCat(this.value)" style="background:#232c38;color:#fff;border:1px solid #2a3340;border-radius:6px;padding:4px">'+(l.cable=='fiber'?['mm','sm']:['5','5e','6','6a']).map(k=>`<option value="${k}" ${catOf(l)==k?'selected':''}>${CAT[k].n}</option>`).join('')+'</select></div>':''}${ok?'<div>Mesafe: <b>'+(l.cable=='wifi'?Math.round(dm(l)):dm(l))+' m</b> · Hız: <b>'+fmt(mbps(l))+'</b></div>':''}${l.cable=='wifi'&&ok?'<div>Sinyal: <b>'+Math.round(sig(l)*100)+'%</b> · '+STD[apOf(l).std||'n'].m+'</div>'+(intf(l)>.05?'<div class="wr">⚠ Parazit: %'+Math.round(Math.min(1,intf(l))*100)+' — kanalı değiştirin.</div>':''):''}<div class="${ok?'ok':'er'}">${ok?'✔ Doğru bağlantı':'✘ Yanlış: '+r}</div><div class="bx">Durum: ${l.plugged?'Takılı':'Çıkarılmış'}</div><button onclick="plug()">${l.plugged?'🔌 Kabloyu Çıkar':'🔌 Kabloyu Tak'}</button> <button onclick="del()">🗑 Sil</button><div class="bx"><small>Tür değiştir:</small><br>${Object.keys(CAB).map(k=>`<button onclick="ct('${k}')">${CAB[k].n}</button>`).join(' ')}</div>`}}
-function plug(){const l=lk(sel.id);l.plugged=!l.plugged;log(`Kablo ${l.plugged?'takıldı':'çıkarıldı'}: ${dv(l.a).name}–${dv(l.b).name}`,'wr');panel()}
-function setCh(v){const d=dv(sel.id);d.ch=+v;log(`${d.name}: kanal ${v} seçildi.`+(conf(d)?' ⚠ Çakışma var.':''),conf(d)?'er':'wr');panel()}
-function wfx(v){const d=dv(sel.id);d.wifi=v?1:0;log(`${d.name}: Wi-Fi ${v?'açıldı':'kapatıldı'}.`,'wr');panel()}
-function setStd(v){const d=dv(sel.id);d.std=v;log(`${d.name}: ${STD[v].n} seçildi (menzil ${STD[v].r}px).`,'wr');panel()}
-function bot(v){const d=dv(sel.id);d.bot=v;log(`${d.name} ${v?'botnet ile enfekte edildi (sunuculara DDoS gönderecek).':'temizlendi.'}`,v?'er':'ok');panel()}
-function rip(){const d=dv(sel.id),o=d.ip;d.ip=newIP();d.blk=0;d.hits=0;log(`IP sıfırlandı: ${o} → ${d.ip}`,'ok');panel()}
+s.innerHTML=`<h3>${l.cable=='fiber'?'💡':'🔗'} Kablo</h3><div class="r">${dv(l.a).name} ⇄ ${dv(l.b).name}</div><div>Tür: <b>${CAB[l.cable].n}</b></div>${l.cable!='wifi'?'<div>Kategori: <select onchange="setCat(this.value)" style="background:#232c38;color:#fff;border:1px solid #2a3340;border-radius:6px;padding:4px">'+(l.cable=='fiber'?['mm','sm']:['5','5e','6','6a']).map(k=>`<option value="${k}" ${catOf(l)==k?'selected':''}>${CAT[k].n}</option>`).join('')+'</select></div>':''}${ok?'<div>Mesafe: <b>'+(l.cable=='wifi'?Math.round(dm(l)):dm(l))+' m</b> · Hız: <b>'+fmt(mbps(l))+'</b></div><div>Gecikme: <b>'+lat(l).toFixed(1)+' ms</b> · Paket kaybı: <b>%'+(lossP(l)*100).toFixed(1)+'</b></div>':''}${l.cable=='wifi'&&ok?'<div>Sinyal: <b>'+Math.round(sig(l)*100)+'%</b> · '+STD[apOf(l).std||'n'].m+'</div>'+(intf(l)>.05?'<div class="wr">⚠ Parazit: %'+Math.round(Math.min(1,intf(l))*100)+' — kanalı değiştirin.</div>':''):''}<div class="${ok?'ok':'er'}">${ok?'✔ Doğru bağlantı':'✘ Yanlış: '+r}</div><div class="bx">Durum: ${l.plugged?'Takılı':'Çıkarılmış'}</div><button onclick="plug()">${l.plugged?'🔌 Kabloyu Çıkar':'🔌 Kabloyu Tak'}</button> <button onclick="del()">🗑 Sil</button><div class="bx"><small>Tür değiştir:</small><br>${Object.keys(CAB).map(k=>`<button onclick="ct('${k}')">${CAB[k].n}</button>`).join(' ')}</div>`}}
+function plug(){snap();const l=lk(sel.id);l.plugged=!l.plugged;log(`Kablo ${l.plugged?'takıldı':'çıkarıldı'}: ${dv(l.a).name}–${dv(l.b).name}`,'wr');panel()}
+function setCh(v){snap();const d=dv(sel.id);d.ch=+v;log(`${d.name}: kanal ${v} seçildi.`+(conf(d)?' ⚠ Çakışma var.':''),conf(d)?'er':'wr');panel()}
+function wfx(v){snap();const d=dv(sel.id);d.wifi=v?1:0;log(`${d.name}: Wi-Fi ${v?'açıldı':'kapatıldı'}.`,'wr');panel()}
+function setStd(v){snap();const d=dv(sel.id);d.std=v;log(`${d.name}: ${STD[v].n} seçildi (menzil ${STD[v].r}px).`,'wr');panel()}
+function bot(v){snap();const d=dv(sel.id);d.bot=v;log(`${d.name} ${v?'botnet ile enfekte edildi (sunuculara DDoS gönderecek).':'temizlendi.'}`,v?'er':'ok');panel()}
+function rip(){snap();const d=dv(sel.id),o=d.ip;d.ip=newIP();d.blk=0;d.hits=0;log(`IP sıfırlandı: ${o} → ${d.ip}`,'ok');panel()}
 function flood(){const sv=devs.filter(d=>d.type=='server');for(const d of devs)if(d.bot)for(let k=0;k<2;k++){const t=sv[Math.floor(Math.random()*sv.length)];if(!t)return;const r=route(d.id,t.id,0);if(r)pk.push({p:r.p,l:r.ls,i:0,t:0,w:k*120,proto:'DDoS',rep:0,flood:1})}}
-function hook(p,b){const s=dv(p.p[0]);
+function hook(p,b){const s=dv(p.p[0]),lq=lk(p.l[p.i]);
+if(!p.flood&&lq&&Math.random()<lossP(lq)){log(`📉 Paket kaybı: ${dv(p.p[p.i]).name}–${b.name} bağlantısında paket kayboldu (%${Math.round(lossP(lq)*100)}).`,'er');return 1}
+if(b.storm&&!p.flood&&Math.random()<.7){log(`🌪 Broadcast fırtınası: ${b.name} paketi düşürdü.`,'er');return 1}
 if(b.type=='ddos'){if(s.blk){log(`🧹 DDoS temizleme: ${s.ip} bloklu, paket atıldı. IP’yi sıfırlayın.`,'er');return 1}
 if(p.flood){s.hits=(s.hits||0)+1;log(`🧹 DDoS temizleme: ${s.name} (${s.ip}) saldırı paketi çöpe atıldı (${s.hits}/6)`,'wr');if(s.hits>=6){s.blk=1;log(`⛔ ${s.ip} bloklandı! ${s.name} IP’sini sıfırlamalı.`,'er');if(sel&&sel.id==s.id)panel()}return 1}}
 if(b.type=='firewall'&&p.flood&&Math.random()<.6){log(`🧱 Firewall: ${s.ip} saldırı paketini düşürdü.`,'wr');return 1}
 if(b.type=='server'){if(p.flood){b.load=(b.load||0)+1;if(b.load>=8&&!b.down){b.down=1;log(`💥 ${b.name} DDoS altında çöktü! DDoS temizleme sunucusu ekleyin.`,'er')}}else if(b.load>=8){log(`✘ ${b.name} aşırı yüklü, yanıt vermiyor (DDoS).`,'er');return 1}}
 return 0}
+let lang='tr';try{lang=localStorage.getItem('lang')||'tr'}catch(e){}
+const EN={'⏸ Duraklat':'⏸ Pause','▶ Çalıştır':'▶ Run','📨 Paket Gönder':'📨 Send Packet','📚 Rehber / Eğitim':'📚 Guide / Training','🧹 Logu Temizle':'🧹 Clear Log','🗑 Tümünü Sil':'🗑 Delete All','↶ Geri Al':'↶ Undo','↷ Yinele':'↷ Redo','💾 Kaydet':'💾 Save','📂 Aç':'📂 Open','Yükleniyor...':'Loading...','Sol/sağ tık sürükle: gez · Tekerlek: yakınlaştır':'Left/right drag: pan · Wheel: zoom',
+'Uç Cihazlar':'End Devices','Ağ Cihazları':'Network Devices','Kablosuz':'Wireless','Sunucular':'Servers','Güvenlik':'Security','Servis Sağlayıcı (FTTx)':'Service Provider (FTTx)','KABLOLAR':'CABLES','ARAÇ':'TOOL','Seç / Taşı':'Select / Move',
+'Bilgisayar':'Computer','Dizüstü':'Laptop','Akıllı Telefon':'Smartphone','IoT Cihazı':'IoT Device','DNS Sunucusu':'DNS Server','DDoS Temizleme':'DDoS Scrubber','Sunucu':'Server','Düz (bakır)':'Straight (copper)','Çapraz (bakır)':'Crossover (copper)','Fiber optik':'Fiber optic','Wi-Fi (kablosuz)':'Wi-Fi (wireless)',
+'Topoloji boş':'Topology is empty','Soldan bir cihaz seçip tuvale tıklayarak ekleyin. Kablo seçip bir cihazdan diğerine sürükleyin.':'Pick a device on the left and click the canvas to add it. Pick a cable and drag from one device to another.',
+'🗑 Cihazı Sil':'🗑 Delete Device','🗑 Sil':'🗑 Delete','🔌 Kabloyu Çıkar':'🔌 Unplug Cable','🔌 Kabloyu Tak':'🔌 Plug Cable','🔄 IP Sıfırla':'🔄 Reset IP','Botnet virüslü':'Botnet infected','Tür:':'Type:','Kategori:':'Category:','Mesafe:':'Distance:','Gecikme:':'Latency:','Sinyal:':'Signal:','Kanal:':'Channel:','Ethernet hızı:':'Ethernet speed:','Wi-Fi sürümü:':'Wi-Fi version:','Kayıtlar':'Records','Tür değiştir:':'Change type:','Bağlantılar: ':'Connections: ','Bu router’da Wi-Fi var':'This router has Wi-Fi','STP (Spanning Tree) açık':'STP (Spanning Tree) enabled',
+'Ağ Elemanları':'Devices','Kablolar':'Cables','Protokoller':'Protocols','Kullanım':'Usage','Hakkında':'About',
+'Simülasyon çalışıyor.':'Simulation running.','Simülasyon duraklatıldı.':'Simulation paused.','Kaynak cihaza tıklayın.':'Click the source device.','Tüm topoloji temizlendi.':'Topology cleared.','Geri alındı.':'Undone.','Yinelendi.':'Redone.','Topoloji kaydedildi (topoloji.lime.json).':'Topology saved (topoloji.lime.json).','✘ Geçersiz topoloji dosyası.':'✘ Invalid topology file.'};
+function tr(x){if(lang!='en')return x;const k=x.trim();if(EN[k])return x.replace(k,EN[k]);for(const p in EN)if(p.endsWith(' ')&&x.startsWith(p))return EN[p]+x.slice(p.length);return x}
+function trDom(r){if(lang!='en')return;const w=document.createTreeWalker(r||document.body,NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode()){const v=tr(n.nodeValue);if(v!==n.nodeValue)n.nodeValue=v}}
+function pal(){pal0();trDom($('pal'))}
+function panel(){panel0();trDom($('side'))}
+function tab(t){tab0(t);trDom($('mh'))}
+let undo=[],redo=[],stpSig='';
+const ser=()=>JSON.stringify({devs,links,nid});
+function snap(){undo.push(ser());if(undo.length>100)undo.shift();redo=[]}
+function rest(x){const o=JSON.parse(x);devs=o.devs;links=o.links;nid=o.nid;pk=[];sel=null;bad={};panel()}
+function doUndo(){if(!undo.length)return;redo.push(ser());rest(undo.pop());log('Geri alındı.','wr')}
+function doRedo(){if(!redo.length)return;undo.push(ser());rest(redo.pop());log('Yinelendi.','wr')}
+function saveTopo(){const b=new Blob([JSON.stringify({app:'lime',v:1,devs,links,nid})],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='topoloji.lime.json';a.click();log('Topoloji kaydedildi (topoloji.lime.json).','ok')}
+function openTopo(f){const r=new FileReader();r.onload=()=>{try{const o=JSON.parse(r.result),dd=o.devs.filter(d=>DEV[d.type]),ll=o.links.filter(l=>dd.some(d=>d.id==l.a)&&dd.some(d=>d.id==l.b));snap();devs=dd;links=ll;nid=Math.max(o.nid||0,...dd.map(d=>d.id),...ll.map(l=>l.id))+1;pk=[];sel=null;bad={};log('Topoloji açıldı: '+f.name,'ok');panel()}catch(e){log('✘ Geçersiz topoloji dosyası.','er')}};r.readAsText(f)}
+const nodeDelay=d=>d.storm?80:({router:.3,firewall:.4,ddos:.5,switch:.1,hub:.05,dns:.2,server:.2})[d.type]||.05;
+function lat(l){if(l.cable=='wifi'){const a=apOf(l);return 2+(1-Math.max(0,sig(l)))*20+intf(l)*15+(({b:6,g:3,n:1,ac:.5,ax:.3})[a.std||'n']||1)}return(l.cable=='fiber'?.2:.5)+dm(l)*.005}
+function lossP(l){if(l.cable=='wifi')return Math.min(.6,Math.pow(1-Math.max(0,sig(l)),2)*.3+intf(l)*.2);return(catOf(l)!='sm'&&catOf(l)!='mm'&&dm(l)>80)?.03:0}
+function setStp(v){const d=dv(sel.id);snap();d.stp=v?1:0;log(`${d.name}: STP ${v?'açıldı':'kapatıldı'}.`,'wr');panel()}
+function stp(){const ok=l=>l.plugged&&chk(l)[0]&&dv(l.a).type=='switch'&&dv(l.b).type=='switch',E=links.filter(ok),seen={};links.forEach(l=>l.stpBlk=0);devs.forEach(d=>d.storm=0);
+for(const r of devs.filter(d=>d.type=='switch')){if(seen[r.id])continue;const c=[r.id];seen[r.id]=1;for(let i=0;i<c.length;i++)for(const l of E){const o=l.a==c[i]?l.b:l.b==c[i]?l.a:null;if(o!==null&&!seen[o]){seen[o]=1;c.push(o)}}
+const ce=E.filter(l=>c.includes(l.a));if(ce.length<c.length)continue;
+if(c.every(id=>dv(id).stp!==0)){const root=Math.min(...c),tree={},q=[root],vis={[root]:1};while(q.length){const u=q.shift();for(const l of ce){const v=l.a==u?l.b:l.b==u?l.a:null;if(v!==null&&!vis[v]){vis[v]=1;tree[l.id]=1;q.push(v)}}}ce.forEach(l=>{if(!tree[l.id])l.stpBlk=1})}
+else c.forEach(id=>dv(id).storm=1)}
+const sg=links.filter(l=>l.stpBlk).map(l=>l.id).join()+'|'+devs.filter(d=>d.storm).map(d=>d.id).join();
+if(sg!=stpSig){stpSig=sg;const nb=links.filter(l=>l.stpBlk).length,ns=devs.filter(d=>d.storm).length;if(nb)log(`🌲 STP: switch döngüsü tespit edildi, ${nb} yedek bağlantı bloklandı.`,'ok');if(ns)log('🌪 Switch döngüsü var ve STP kapalı: broadcast fırtınası! STP’yi açın veya döngüyü kaldırın.','er')}}
 let fl=0;
-function ct(k){const l=lk(sel.id);l.cable=k;l.cat=k=='fiber'?'sm':'5e';panel()}
-function setCat(v){lk(sel.id).cat=v;panel()}
-function route(s,t,all){const prev={[s]:null},q=[s];while(q.length){const u=q.shift();if(u==t)break;for(const l of links){if(!all&&(!l.plugged||!chk(l)[0]))continue;const v=l.a==u?l.b:l.b==u?l.a:null;if(v!==null&&!(v in prev)){prev[v]=[u,l.id];q.push(v)}}}
+function ct(k){snap();const l=lk(sel.id);l.cable=k;l.cat=k=='fiber'?'sm':'5e';panel()}
+function setCat(v){snap();lk(sel.id).cat=v;panel()}
+function route(s,t,all){const prev={[s]:null},q=[s];while(q.length){const u=q.shift();if(u==t)break;for(const l of links){if(!all&&(!l.plugged||!chk(l)[0]||l.stpBlk))continue;const v=l.a==u?l.b:l.b==u?l.a:null;if(v!==null&&!(v in prev)){prev[v]=[u,l.id];q.push(v)}}}
 if(!(t in prev))return null;const p=[t],ls=[];let c=t;while(prev[c]){ls.unshift(prev[c][1]);c=prev[c][0];p.unshift(c)}return{p,ls}}
 function send(s,t){const proto=$('proto').value,A=dv(s),B=dv(t);bad={};
 if(s==t)return log('Kaynak ve hedef aynı.','er');
 log(`▶ ${proto}: ${A.name} → ${B.name}`,'in');const r=route(s,t,0);
-if(r){const w=r.ls.map(lk).reduce((m,l)=>mbps(l)<mbps(m)?l:m);log(`  Yol hızı (darboğaz): ${fmt(mbps(w))} — ${dv(w.a).name}–${dv(w.b).name}`,'wr');pk.push({p:r.p,l:r.ls,i:0,t:0,w:0,proto,rep:0});return}
+if(r){const w=r.ls.map(lk).reduce((m,l)=>mbps(l)<mbps(m)?l:m);log(`  Yol hızı (darboğaz): ${fmt(mbps(w))} — ${dv(w.a).name}–${dv(w.b).name}`,'wr');const ow=r.ls.reduce((a,id)=>a+lat(lk(id)),0)+r.p.reduce((a,id)=>a+nodeDelay(dv(id)),0),lp=1-r.ls.reduce((a,id)=>a*(1-lossP(lk(id))),1),rtt=2*ow;log(`  Tahmini RTT: ${rtt.toFixed(1)} ms · paket kaybı: %${(100*(1-Math.pow(1-lp,2))).toFixed(1)}`,'wr');pk.push({p:r.p,l:r.ls,i:0,t:0,w:0,proto,rep:0,rtt});return}
 const f=route(s,t,1);log('✘ Paket hedefe ulaşamıyor. DEBUG:','er');
 if(!f){log(`  • ${A.name} ile ${B.name} arasında hiçbir kablo yolu yok. Aradaki cihazları kabloyla bağlayın.`,'er');return}
 f.ls.forEach(id=>{const l=lk(id),[ok,r]=chk(l);if(!l.plugged){log(`  • ${dv(l.a).name}–${dv(l.b).name}: kablo ÇIKARILMIŞ. Kabloyu takın.`,'er');bad[id]=1}if(!ok){log(`  • ${r}`,'er');bad[id]=1}});setTimeout(()=>bad={},4000)}
 let last=performance.now();
-function step(n){const dt=Math.min(50,n-last);last=n;if(running){fl+=dt;if(fl>500){fl=0;flood()}for(const d of devs)if(d.load>0){d.load=Math.max(0,d.load-dt*.0006);if(d.load<2&&d.down){d.down=0;log(d.name+' toparlandı.','ok')}}}
+function step(n){dnsSync();stp();const dt=Math.min(50,n-last);last=n;if(running){fl+=dt;if(fl>500){fl=0;flood()}for(const d of devs)if(d.load>0){d.load=Math.max(0,d.load-dt*.0006);if(d.load<2&&d.down){d.down=0;log(d.name+' toparlandı.','ok')}}}
 if(running)for(const p of pk.slice()){if(p.w>0){p.w-=dt;continue}const l=lk(p.l[p.i]);
-if(!l||!l.plugged||!chk(l)[0]){log('Paket yolda düştü: kablo değişti/çıkarıldı.','er');pk.splice(pk.indexOf(p),1);continue}
+if(!l||!l.plugged||!chk(l)[0]||l.stpBlk){log('Paket yolda düştü: kablo değişti/çıkarıldı.','er');pk.splice(pk.indexOf(p),1);continue}
 const a=dv(p.p[p.i]),b=dv(p.p[p.i+1]);p.t+=dt*spd(l)/Math.hypot(b.x-a.x,b.y-a.y||1);
 if(p.t>=1){glow[b.id]=n;if(hook(p,b)){pk.splice(pk.indexOf(p),1);continue}p.i++;p.t=0;p.w=280;if(!p.flood)log(`  ${p.proto}${p.rep?' (yanıt)':''} → ${b.name} ulaştı (${CAB[l.cable].n})`,'ok');
-if(p.i>=p.l.length){pk.splice(pk.indexOf(p),1);if(p.flood){}else if(!p.rep){pk.push({p:p.p.slice().reverse(),l:p.l.slice().reverse(),i:0,t:0,w:300,proto:p.proto,rep:1})}else log('✔ Tamamlandı: yanıt kaynağa döndü.','ok')}}}
+if(p.i>=p.l.length){pk.splice(pk.indexOf(p),1);if(p.flood){}else if(!p.rep){pk.push({p:p.p.slice().reverse(),l:p.l.slice().reverse(),i:0,t:0,w:300,proto:p.proto,rep:1,rtt:p.rtt})}else log('✔ Tamamlandı: yanıt kaynağa döndü. RTT = '+(p.rtt||0).toFixed(1)+' ms','ok')}}}
 draw(n);requestAnimationFrame(step)}
 function draw(n){cv.width=cv.clientWidth;cv.height=cv.clientHeight;cx.setTransform(view.z,0,0,view.z,view.x,view.y);
 cx.strokeStyle='#1c242e';cx.lineWidth=1/view.z;const g=50,x0=-view.x/view.z,y0=-view.y/view.z;
@@ -147,11 +200,11 @@ for(let y=Math.floor(y0/g)*g;y<y0+cv.height/view.z;y+=g){cx.beginPath();cx.moveT
 for(const d of devs)if(hasWf(d)){const T=STD[d.std||'n'],r=T.r,cf=conf(d),cc=cf?'255,90,90':'199,146,234';for(let i=0;i<3;i++){const k=((n*T.s/600)+i/3)%1;cx.strokeStyle=`rgba(${cc},${.4*(1-k)})`;cx.lineWidth=2;cx.beginPath();cx.arc(d.x,d.y,r*k,0,7);cx.stroke()}cx.strokeStyle=cf?'#ff5a5a77':'#c792ea44';cx.lineWidth=1;cx.setLineDash([6,6]);cx.beginPath();cx.arc(d.x,d.y,r,0,7);cx.stroke();cx.setLineDash([])}
 for(const l of links){const a=dv(l.a),b=dv(l.b),[ok]=chk(l);cx.lineWidth=(l.cable=='fiber'?4:3);cx.setLineDash([]);
 cx.strokeStyle=!ok||bad[l.id]?(bad[l.id]&&Math.floor(n/250)%2?'#fff':'#ff4d4d'):CAB[l.cable].c;
-if(!ok)cx.setLineDash([8,6]);if(l.cable=='wifi'&&ok&&!bad[l.id]){cx.strokeStyle=`hsl(${sig(l)*120/(1+1.5*intf(l))},80%,55%)`;cx.setLineDash([3,6])}
+if(!ok)cx.setLineDash([8,6]);if(l.stpBlk){cx.strokeStyle='#ffb300';cx.setLineDash([2,6])}if(l.cable=='wifi'&&ok&&!bad[l.id]){cx.strokeStyle=`hsl(${sig(l)*120/(1+1.5*intf(l))},80%,55%)`;cx.setLineDash([3,6])}
 if(!l.plugged){const mx=(a.x+b.x)/2,my=(a.y+b.y)/2,u=.15;cx.setLineDash([]);cx.strokeStyle='#667';cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(a.x+(mx-a.x)*(1-u)*1,a.y+(my-a.y)*(1-u));cx.moveTo(b.x,b.y);cx.lineTo(b.x+(mx-b.x)*(1-u),b.y+(my-b.y)*(1-u));cx.stroke()}
 else{cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke()}
 if(sel&&sel.k=='l'&&sel.id==l.id){cx.setLineDash([]);cx.strokeStyle='#fff8';cx.lineWidth=8;cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);cx.stroke()}
-cx.setLineDash([]);cx.fillStyle=ok?'#9fb0c0':'#ff6b6b';cx.font='11px Segoe UI';cx.textAlign='center';cx.fillText(l.cable=='wifi'&&ok?Math.round(sig(l)*100)+'%'+(intf(l)>.05?'⚠':''):ok?'✔':'✘',(a.x+b.x)/2,(a.y+b.y)/2-6);if(ok)cx.fillText(fmt(mbps(l)),(a.x+b.x)/2,(a.y+b.y)/2+8)}
+cx.setLineDash([]);cx.fillStyle=ok?'#9fb0c0':'#ff6b6b';cx.font='11px Segoe UI';cx.textAlign='center';cx.fillText(l.stpBlk?'STP ⛔':l.cable=='wifi'&&ok?Math.round(sig(l)*100)+'%'+(intf(l)>.05?'⚠':''):ok?'✔':'✘',(a.x+b.x)/2,(a.y+b.y)/2-6);if(ok)cx.fillText(fmt(mbps(l)),(a.x+b.x)/2,(a.y+b.y)/2+8)}
 if(drag&&drag.k=='cab'){const a=dv(drag.from);cx.strokeStyle='#fff6';cx.lineWidth=2;cx.setLineDash([4,4]);cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(cur.x,cur.y);cx.stroke();cx.setLineDash([])}
 for(const p of pk){if(p.w>0&&p.i>0)continue;if(p.i>=p.l.length)continue;const a=dv(p.p[p.i]),b=dv(p.p[p.i+1]);if(!a||!b)continue;const x=a.x+(b.x-a.x)*p.t,y=a.y+(b.y-a.y)*p.t;
 cx.fillStyle=p.flood?'#ff3b3b':p.rep?'#ffd54f':'#fff';cx.shadowColor='#9be21f';cx.shadowBlur=12;cx.beginPath();cx.arc(x,y,6,0,7);cx.fill();cx.shadowBlur=0}
@@ -159,17 +212,18 @@ for(const d of devs){const gl=glow[d.id]&&n-glow[d.id]<700?1-(n-glow[d.id])/700:
 cx.shadowColor='#9be21f';cx.shadowBlur=gl?30*gl:0;cx.fillStyle='#1e2630';cx.strokeStyle=gl?'#c8f56a':s?'#fff':'#9be21f';cx.lineWidth=gl?3:2;
 cx.beginPath();cx.roundRect(d.x-34,d.y-28,68,56,10);cx.fill();cx.stroke();cx.shadowBlur=0;
 cx.fillStyle='#fff';cx.textAlign='center';cx.font='24px Segoe UI Emoji';cx.fillText(DEV[d.type].e,d.x,d.y+6);cx.font='11px Segoe UI';cx.fillStyle='#cfd8e3';if(d.load>0){cx.fillStyle=d.load>=8?'#f44':'#ffb74d';cx.fillRect(d.x-30,d.y+30,60*Math.min(1,d.load/8),3)}
-cx.font='14px Segoe UI Emoji';if(d.bot)cx.fillText('🦠',d.x-26,d.y-14);if(d.blk)cx.fillText('⛔',d.x+26,d.y-14);if(d.down)cx.fillText('💥',d.x,d.y-34);cx.fillStyle='#cfd8e3';cx.font='11px Segoe UI';cx.fillText(d.name,d.x,d.y+46);if(d.ip){cx.fillStyle='#8b98a8';cx.font='10px Consolas';cx.fillText(d.ip,d.x,d.y+58)}}}
-$('run').onclick=()=>{running=!running;$('run').textContent=running?'⏸ Duraklat':'▶ Çalıştır';$('run').classList.toggle('on',running);log(running?'Simülasyon çalışıyor.':'Simülasyon duraklatıldı.','wr')};
+cx.font='14px Segoe UI Emoji';if(d.bot)cx.fillText('🦠',d.x-26,d.y-14);if(d.blk)cx.fillText('⛔',d.x+26,d.y-14);if(d.down)cx.fillText('💥',d.x,d.y-34);if(d.storm)cx.fillText('🌪️',d.x,d.y-34);cx.fillStyle='#cfd8e3';cx.font='11px Segoe UI';cx.fillText(d.name,d.x,d.y+46);if(d.ip){cx.fillStyle='#8b98a8';cx.font='10px Consolas';cx.fillText(d.ip,d.x,d.y+58)}if(d.site){cx.fillStyle='#7fb7ff';cx.font='10px Segoe UI';cx.fillText('🌐 '+d.site,d.x,d.y+70)}}}
+$('run').onclick=()=>{running=!running;$('run').textContent=tr(running?'⏸ Duraklat':'▶ Çalıştır');$('run').classList.toggle('on',running);log(running?'Simülasyon çalışıyor.':'Simülasyon duraklatıldı.','wr')};
 $('ping').onclick=()=>{tool='sel';pal();pingSrc=null;$('ping').classList.toggle('on');if($('ping').classList.contains('on'))log('Kaynak cihaza tıklayın.','wr')};
 $('clr').onclick=()=>$('log').innerHTML='';
-$('clrall').onclick=()=>{if(!devs.length)return;if(!confirm('Topolojideki tüm cihaz ve kablolar silinsin mi?'))return;devs=[];links=[];pk=[];sel=null;bad={};pingSrc=null;log('Tüm topoloji temizlendi.','wr');panel()};
+$('clrall').onclick=()=>{if(!devs.length)return;if(!confirm('Topolojideki tüm cihaz ve kablolar silinsin mi?'))return;snap();devs=[];links=[];pk=[];sel=null;bad={};pingSrc=null;log('Tüm topoloji temizlendi.','wr');panel()};
+$('undo').onclick=doUndo;$('redo').onclick=doRedo;$('save').onclick=saveTopo;$('open').onclick=()=>$('fi').click();$('fi').onchange=e=>{if(e.target.files[0])openTopo(e.target.files[0]);e.target.value=''};$('lng').value=lang;$('lng').onchange=()=>{try{localStorage.setItem('lang',$('lng').value)}catch(e){}location.reload()};
 $('guide').onclick=()=>{$('md').style.display='flex';tab('dev')};$('md').onclick=e=>{if(e.target==$('md'))$('md').style.display='none'};
-function tab(t){$('mh').innerHTML=['dev:Ağ Elemanları','cab:Kablolar','pro:Protokoller','use:Kullanım','ab:Hakkında'].map(x=>{const[k,n]=x.split(':');return`<button class="${k==t?'on':''}" onclick="tab('${k}')">${n}</button>`}).join('')+'<button style="margin-left:auto" onclick="$(\'md\').style.display=\'none\'">✕</button>';let h='';
-if(t=='dev')for(const k in DEV){const I=DEV[k];h+=`<h4>${I.e} ${I.n}</h4>${I.d}<br><b>Kablolama:</b> ${I.c}`}
+function tab0(t){$('mh').innerHTML=['dev:Ağ Elemanları','cab:Kablolar','pro:Protokoller','use:Kullanım','ab:Hakkında'].map(x=>{const[k,n]=x.split(':');return`<button class="${k==t?'on':''}" onclick="tab('${k}')">${n}</button>`}).join('')+'<button style="margin-left:auto" onclick="$(\'md\').style.display=\'none\'">✕</button>';let h='';
+if(t=='dev')for(const g in GRP){h+=`<h3 style="color:#fff;border-bottom:1px solid #2a3340">${g}</h3>`;for(const k of GRP[g]){const I=DEV[k];h+=`<h4>${I.e} ${I.n}</h4>${I.d}<br><b>Kablolama:</b> ${I.c}`}}
 if(t=='cab')h=`<h4>Düz kablo (bakır)</h4>Farklı türdeki cihazları bağlar: PC↔Switch, Router↔Switch.<h4>Çapraz kablo (bakır)</h4>Aynı türdeki cihazları bağlar: PC↔PC, Switch↔Switch, Router↔Router.<h4>Fiber optik</h4>Işıkla iletim; daha hızlı ve uzun mesafe. Yalnızca fiber portlu cihazlarda kullanılır. Simülasyonda veri bakıra göre ~3 kat hızlı akar.<h4>Kural özeti</h4><code>DTE</code>: PC, Dizüstü, Sunucu, Router, Firewall, OLT · <code>DCE</code>: Switch, Hub, AP, Modem, ONT. Aynı grup → çapraz, farklı grup → düz.<h4>Kategori ve hız</h4>Cat5 100 Mbps, Cat5e 1 Gbps, Cat6 1 Gbps (55 m’ye kadar 10 Gbps), Cat6a 10 Gbps. Bakır en fazla 100 m; 50 m’den sonra hız düşer, 100 m’yi aşınca bağlantı çalışmaz. Çok modlu fiber 300 m, tek modlu fiber çok uzun mesafe destekler. Gerçek hız; kablo, mesafe ve iki cihazın port hızından en düşüğüdür. Ölçek: 1 piksel = 0,25 m. OLT yalnızca fiber kabul eder.<h4>Wi-Fi</h4>Wi-Fi aracıyla bir istemciyi Wi-Fi vericisine (AP, Router, Modem) sürükleyin. Sinyal mesafeyle azalır; menzil dışında bağlantı kurulmaz. 802.11b yavaş (11 Mbps), ac/ax hızlıdır; Vericiyi seçip standardı değiştirin. Dalga animasyonu ve paket hızı standarda göre değişir. Telefon ve IoT cihazları yalnızca Wi-Fi destekler. Router’da Wi-Fi isteğe bağlıdır: router’ı seçip “Bu router’da Wi-Fi var” kutusunu işaretleyin. <b>Kanal çakışması:</b> aynı bantta (802.11ac 5 GHz, diğerleri 2.4 GHz) kanalı yakın (fark &lt;5) ve menzilleri kesişen vericiler birbirine parazit yapar; çemberleri kırmızı olur, hız düşer. 1-6-11 gibi birbirinden uzak kanallar seçin.<h4>FTTx (OLT/ONT)</h4>OLT ile ONT arası yalnızca fiber. ONT’den router’a düz kablo çekin. Fiber destekleyen: Switch, Router, Sunucu, Firewall, Modem, OLT, ONT.`;
 if(t=='pro')for(const k in PROTO)h+=`<h4>${k}</h4>${PROTO[k]}`;
 if(t=='use')h=`<h4>Başlangıç</h4>1) Soldan cihaz seçip tuvale tıklayın.<br>2) Kablo türünü seçip bir cihazdan diğerine sürükleyin.<br>3) ✔ doğru, ✘ yanlış bağlantıdır; yanlış kabloda veri akmaz.<br>4) “Paket Gönder” ile kaynak ve hedefe tıklayın.<br>5) Ulaşmazsa alttaki Debug günlüğü hatayı söyler, hatalı kablo kırmızı yanıp söner.<br>6) Kablo seçip çıkarın/takın/silin. <code>Delete</code> seçileni siler, <code>Esc</code> aracı iptal eder.<h4>Saldırı (Botnet/DDoS)</h4>Bilgisayar, dizüstü, telefon veya IoT cihazını seçip “Botnet virüslü” işaretleyin; cihaz sunuculara sürekli DDoS paketi (kırmızı) yollar. Sunucu aşırı yüklenip çökebilir. Yola Firewall koyarsanız paketlerin bir kısmı düşer; DDoS Temizleme sunucusu koyarsanız tüm saldırı paketleri çöpe atılır ve saldıran IP birkaç paket sonra bloklanır. Bloklu cihaz IP’sini sağ panelden sıfırlamalıdır. Virüsü kaldırmazsanız yeniden bloklanır.<h4>Gezinme</h4>Boşluğa sol tık sürükle: gez · Fare tekerleği: yakınlaştır/uzaklaştır.`;if(t=='ab')h=`<h4>🍋 Lime Network Simulator</h4>Sürüm 1.0<br><br>Made by <b>Nomad</b> with Claude AI<br><a href="https://github.com/nomadkm" target="_blank" style="color:#9be21f">https://github.com/nomadkm</a>`;$('mb').innerHTML=h}
-pal();panel();requestAnimationFrame(step);
+pal();panel();requestAnimationFrame(step);trDom();
 setTimeout(()=>{$('load').style.opacity=0;setTimeout(()=>$('load').remove(),500)},2200);
 </script></body></html>
