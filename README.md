@@ -6,9 +6,9 @@ Uygulama Electron ile paketlenmiş bir masaüstü programıdır. Arayüz tek bir
 
 ## İndirme
 
-Uygulamayı kullanmak için Node.js, npm veya başka bir şey kurman gerekmez. Sağdaki **Releases** bölümünden en son sürümdeki `Lime Network Simulator 1.0.0.exe` dosyasını indirip çift tıklaman yeterlidir. Windows 10 ve 11'de çalışır.
+Uygulamayı kullanmak için Node.js, npm veya başka bir şey kurman gerekmez. Sağdaki **Releases** bölümünden en son sürümdeki dosyayı indirip çift tıklaman yeterlidir. Windows 10 ve 11'de çalışır.
 
-İki dosya vardır: `Lime-Network-Simulator-Setup-1.2.0.exe` kurulumlu sürümdür ve yeni sürüm çıktığında kendini otomatik günceller (önerilen). `Lime-Network-Simulator-1.2.0-portable.exe` taşınabilir sürümdür, kurulum gerektirmez ama güncellemeleri elle indirmen gerekir. Dosya taşınabilir (kurulumsuz) çalışır.
+İki dosya vardır: `.exe` kurulumlu sürümdür ve yeni sürüm çıktığında kendini otomatik günceller (önerilen). `portable.exe` taşınabilir sürümdür, kurulum gerektirmez ama güncellemeleri elle indirmen gerekir. Dosya taşınabilir (kurulumsuz) çalışır.
 
 Windows ilk açılışta "Windows bilgisayarınızı korudu" uyarısı gösterebilir, çünkü uygulama dijital olarak imzalı değildir. **Ek bilgi → Yine de çalıştır** diyerek açabilirsin.
 
