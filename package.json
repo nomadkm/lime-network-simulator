@@ -1,6 +1,6 @@
 {
   "name": "lime-network-simulator",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Lime Network Simulator",
   "author": "Nomad",
   "license": "MIT",
@@ -9,14 +9,40 @@
     "start": "electron .",
     "dist": "electron-builder --win --publish never"
   },
-  "dependencies": { "electron-updater": "^6.3.9" },
-  "devDependencies": { "electron": "^31.0.0", "electron-builder": "^24.13.3" },
+  "dependencies": {
+    "electron-updater": "^6.3.9"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
   "build": {
     "appId": "com.lime.networksimulator",
     "productName": "Lime Network Simulator",
-    "files": ["main.js", "index.html", "icon.ico"],
-    "publish": [{ "provider": "github", "owner": "nomadkm", "repo": "lime-network-simulator" }],
-    "win": { "target": ["nsis", "portable"], "icon": "icon.ico" },
-    "nsis": { "oneClick": true, "perMachine": false }
+    "files": [
+      "main.js",
+      "index.html",
+      "style.css",
+      "src/**/*",
+      "icon.ico"
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "nomadkm",
+        "repo": "lime-network-simulator"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false
+    }
   }
 }

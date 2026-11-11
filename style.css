@@ -1,0 +1,21 @@
+:root{--bg:#12161c;--p:#1a2029;--b:#2a3340;--t:#e6edf3;--m:#8b98a8;--l:#9be21f}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--t);font:13px Segoe UI,sans-serif;overflow:hidden}
+button{background:#232c38;color:var(--t);border:1px solid var(--b);border-radius:6px;padding:6px 10px;cursor:pointer;font:inherit}
+button:hover{border-color:var(--l)}button.on{background:var(--l);color:#111;border-color:var(--l)}
+#load{position:fixed;inset:0;background:var(--bg);z-index:9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .5s}
+#load h1{margin:0;font-size:26px;color:var(--l)}#load p{margin:0;color:var(--m)}
+.sp{width:38px;height:38px;border:4px solid var(--b);border-top-color:var(--l);border-radius:50%;animation:r 1s linear infinite}@keyframes r{to{transform:rotate(360deg)}}
+#app{display:grid;grid-template-columns:150px 1fr 290px;grid-template-rows:46px 1fr 130px;height:100%}
+#top{grid-column:1/4;background:var(--p);border-bottom:1px solid var(--b);display:flex;gap:6px;align-items:center;padding:0 10px}
+#top b{color:var(--l);margin-right:10px}#pal{background:var(--p);border-right:1px solid var(--b);padding:8px;overflow:auto;display:flex;flex-direction:column;gap:5px}
+#pal small{color:var(--m);margin-top:6px;text-transform:uppercase}#pal button{text-align:left}
+#cv{width:100%;height:100%;display:block}#cw{position:relative;overflow:hidden}
+#side{background:var(--p);border-left:1px solid var(--b);padding:12px;overflow:auto;line-height:1.5}
+#side h3{margin:0 0 6px;color:var(--l)}#side .r{margin:6px 0;color:var(--m)}#side .bx{background:#10151b;border:1px solid var(--b);border-radius:6px;padding:8px;margin:8px 0}
+#log{grid-column:1/4;background:#0d1116;border-top:1px solid var(--b);padding:6px 10px;overflow:auto;font:12px Consolas,monospace}
+.ok{color:#8bc34a}.er{color:#ff6b6b}.in{color:#7fb7ff}.wr{color:#ffc247}
+#md{position:fixed;inset:0;background:#000a;z-index:8;display:none;align-items:center;justify-content:center}
+#md>div{background:var(--p);border:1px solid var(--b);border-radius:10px;width:760px;max-width:94%;height:78%;display:flex;flex-direction:column}
+#mh{display:flex;gap:6px;padding:10px;border-bottom:1px solid var(--b)}#mb{padding:14px;overflow:auto;line-height:1.55}
+#mb h4{margin:12px 0 4px;color:var(--l)}#mb code{background:#10151b;padding:1px 5px;border-radius:4px}
+.hint{position:absolute;left:10px;top:8px;color:var(--m);pointer-events:none}
